@@ -12,21 +12,33 @@ import java.util.stream.Collectors;
 import java.time.Month;
 import java.time.Period;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class FuncionarioService {
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+
     public void removeFuncionarioDaLista(List<Funcionario> funcionarios, String nome) {
         funcionarios.removeIf(funcionario -> funcionario.getNome().equals(nome));
     }
 
+    private void printInformacoesFuncionario(Funcionario funcionario) {
+        System.out.println("Nome: " + funcionario.getNome());
+        System.out.println("Data de Nascimento: " + funcionario.getDataNascimento().format(dateFormatter));
+        System.out.println("Função: " + funcionario.getFuncao());
+        System.out.println("Salário: " + numberFormat.format(funcionario.getSalario()));
+        System.out.println("-------------------------");
+    }
+
+    private void printFuncionarioSalarioMinimos(Funcionario funcionario, BigDecimal quantidadeSalariosMinimos) {
+        System.out.println("Nome: " + funcionario.getNome());
+        System.out.println("Salário: " + numberFormat.format(funcionario.getSalario()));
+        System.out.println("Quantidade de Salários Mínimos: " + quantidadeSalariosMinimos);
+        System.out.println("-------------------------");
+    }
+
     public void printFuncionarios(List<Funcionario> funcionarios) {
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
-        funcionarios.forEach(funcionario -> {
-            System.out.println("Nome: " + funcionario.getNome());
-            System.out.println("Data de Nascimento: " + funcionario.getDataNascimento());
-            System.out.println("Função: " + funcionario.getFuncao());
-            System.out.println("Salário: " + numberFormat.format(funcionario.getSalario()));
-            System.out.println("-------------------------");
-        });
+        funcionarios.forEach(this::printInformacoesFuncionario);
     }
 
     public void aumentarSalario(List<Funcionario> funcionarios, BigDecimal percentual) {
@@ -43,12 +55,7 @@ public class FuncionarioService {
     public void printFuncionariosPorFuncao(Map<String, List<Funcionario>> funcionariosPorFuncao) {
         funcionariosPorFuncao.forEach((funcao, funcionarios) -> {
             System.out.println("Função: " + funcao);
-            funcionarios.forEach(funcionario -> {
-                System.out.println("Nome: " + funcionario.getNome());
-                System.out.println("Data de Nascimento: " + funcionario.getDataNascimento());
-                System.out.println("Salário: " + funcionario.getSalario());
-                System.out.println();
-            });
+            funcionarios.forEach(this::printInformacoesFuncionario);
             System.out.println("-------------------------");
         });
     }
@@ -59,13 +66,7 @@ public class FuncionarioService {
                 Month mes = funcionario.getDataNascimento().getMonth();
                 return mes == Month.OCTOBER || mes == Month.DECEMBER;
             })
-            .forEach(funcionario -> {
-                System.out.println("Nome: " + funcionario.getNome());
-                System.out.println("Data de Nascimento: " + funcionario.getDataNascimento());
-                System.out.println("Função: " + funcionario.getFuncao());
-                System.out.println("Salário: " + funcionario.getSalario());
-                System.out.println("-------------------------");
-            });
+            .forEach(this::printInformacoesFuncionario);
     }
 
     public void printNomeEIdadeDoMaisVelho(List<Funcionario> funcionarios) {
@@ -85,13 +86,7 @@ public class FuncionarioService {
     public void printFuncionariosEmOrdemAlfabetica(List<Funcionario> funcionarios) {
         funcionarios.stream()
             .sorted((f1, f2) -> f1.getNome().compareToIgnoreCase(f2.getNome()))
-            .forEach(funcionario -> {
-                System.out.println("Nome: " + funcionario.getNome());
-                System.out.println("Data de Nascimento: " + funcionario.getDataNascimento());
-                System.out.println("Função: " + funcionario.getFuncao());
-                System.out.println("Salário: " + funcionario.getSalario());
-                System.out.println("-------------------------");
-            });
+            .forEach(this::printInformacoesFuncionario);
     }
 
     public BigDecimal somaDeTodosOsSalarios(List<Funcionario> funcionarios) {
@@ -108,10 +103,7 @@ public class FuncionarioService {
         BigDecimal salarioMinimo = BigDecimal.valueOf(1212);
         funcionarios.forEach(funcionario -> {
             BigDecimal quantidadeSalariosMinimos = funcionario.getSalario().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
-            System.out.println("Nome: " + funcionario.getNome());
-            System.out.println("Salário: " + funcionario.getSalario());
-            System.out.println("Quantidade de Salários Mínimos: " + quantidadeSalariosMinimos);
-            System.out.println("-------------------------");
+            printFuncionarioSalarioMinimos(funcionario, quantidadeSalariosMinimos);
         });
     }
 }
