@@ -13,7 +13,7 @@ Ou se você já tiver o java 21 instalado, pode usar direto o maven:
 
 ```bash
 mvn clean install
-java -jar target/nome-do-jar.jar
+java -jar target/TestePratico-Iniflex-1.0-SNAPSHOT.jar
 ```
 
 ## Requisitos
