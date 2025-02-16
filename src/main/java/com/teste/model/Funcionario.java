@@ -1,12 +1,13 @@
 package com.teste.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Funcionario extends Pessoa{
     private String funcao;
-    private double salario;
+    private BigDecimal salario;
 
-    public Funcionario(String nome, LocalDate dataDeNascimento, String funcao, double salario) {
+    public Funcionario(String nome, LocalDate dataDeNascimento, String funcao, BigDecimal salario) {
         super(nome, dataDeNascimento);
         this.funcao = funcao;
         this.salario = salario;
@@ -16,7 +17,7 @@ public class Funcionario extends Pessoa{
         return funcao;
     }
 
-    public double getSalario() {
+    public BigDecimal getSalario() {
         return salario;
     }
 
@@ -24,7 +25,7 @@ public class Funcionario extends Pessoa{
         this.funcao = funcao;
     }
 
-    public void setSalario(double salario) {
+    public void setSalario(BigDecimal salario) {
         this.salario = salario;
     }
 }

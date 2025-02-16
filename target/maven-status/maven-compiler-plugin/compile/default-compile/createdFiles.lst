@@ -1,4 +1,5 @@
 com/teste/model/Pessoa.class
 com/teste/service/LerArquivoService.class
 com/teste/App.class
+com/teste/service/FuncionarioService.class
 com/teste/model/Funcionario.class
