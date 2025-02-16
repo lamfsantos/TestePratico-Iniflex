@@ -30,6 +30,7 @@ public class LerArquivoService {
     }
     
     private List<Funcionario> populaListaDeFuncionarios(List<List<String>> data) {
+        System.out.println("Populando lista de funcionários...");
         List<Funcionario> funcionarios = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
